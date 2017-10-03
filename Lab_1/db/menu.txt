@@ -1,0 +1,12 @@
+1. Show groups
+2. Create group
+3. Update group
+4. Delete group
+5. Show faculties
+6. Create faculty
+7. Add group to faculty
+8. Remove group from faculty
+9. Remove faculty
+10. Show faculty with max number of groups
+
+e. Exit
