@@ -16,10 +16,10 @@ class Faculty(object):
             self.groups.remove(group.gid)
 
     def __str__(self):
-        res = "Faculty %s\n\tGroups:\n\t\t" % self.gid
+        res = "Faculty %s\n\tGroups:\n\t\t" % self.fid
         groupsList = File_function.load_groups()
         for g in self.groups:
-            group = [item for item in groupsList.group if str(item.id) == str(g)]
+            group = [item for item in groupsList.groups if str(item.gid) == str(g)]
             if group:
                 res += group[0].__str__() + "\n\t\t"
 
@@ -33,11 +33,11 @@ class Faculties:
         allGroups = File_function.load_groups()
         groups = []
         for gid in gids:
-            group = [item for item in allGroups.groups if str(item.id) == str(gid)]
+            group = [item for item in allGroups.groups if str(item.gid) == str(gid)]
             if group:
                 groups.append(gid)
         for i in range(1,self.faculties.__len__() + 2):
-            if not any(str(item.id) == str(i) for item in self.faculties):
+            if not any(str(item.fid) == str(i) for item in self.faculties):
                 name = input("")
                 faculty = Faculty(str(i),name,groups)
                 self.faculties.append(faculty)
@@ -53,10 +53,16 @@ class Faculties:
 
     def faculty_with_max_num_of_group(self):
         res = ""
-        allFaculties = File_function.load_faculties()
+        allfaculties = File_function.load_faculties()
+        max_len = 0
         for faculty in self.faculties:
-            max_len = max([len(i) for i in faculty.groups])
-            targets = [item for item in allFaculties.faculties if max_len]
+            groups_max = len(faculty.groups)
+            if (groups_max > max_len):
+                max_len = groups_max
+        targets = [item for item in allfaculties.faculties if max_len == len(item.groups)]
+        if targets:
+            print(targets[0])
+
 
     def add_group_to_fac(self, faculty, group):
         faculty.add_group(group)
@@ -69,7 +75,7 @@ class Faculties:
             return faculty
 
     def get_faculty_by_id(self, fid):
-        faculty = [faculty for faculty in self.faculties if str(faculty.id) == str(fid)]
+        faculty = [faculty for faculty in self.faculties if str(faculty.fid) == str(fid)]
         if faculty :
             return faculty[0]
         else:

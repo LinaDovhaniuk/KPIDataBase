@@ -1,8 +1,14 @@
 from file_functions import File_function
+from faculty import Faculties
+from group import Groups
+
+
 class Functions:
     def start(self):
-        faculties = File_function.load_faculties()
-        groups = File_function.load_groups()
+        fileFunc = File_function()
+
+        faculties = fileFunc.load_faculties()
+        groups = fileFunc.load_groups()
         menu = self.show()
 
         while True:
@@ -41,8 +47,8 @@ class Functions:
             elif choice == 'e':
                 break
 
-            File_function.save_faculties(faculties)
-            File_function.save_groups(groups)
+            fileFunc.save_faculties(faculties)
+            fileFunc.save_groups(groups)
 
     def show_groups(self, groups):
         self.print_not_none(groups)
@@ -63,8 +69,8 @@ class Functions:
         self.print_not_none(group)
         if group is not None:
             try:
-                newName = input("New name(Old: %s) = " % group.name)
-                newNumOfStud = float(input("New number of students(Old: %f) = " % group.cost))
+                newName = input("New name(Old: %s) = " % group.gname)
+                newNumOfStud = float(input("New number of students(Old: %f) = " % group.students))
 
                 group = groups.update(gid, newName, newNumOfStud)
 
@@ -74,7 +80,7 @@ class Functions:
 
     def remove_group(self, groups):
         gid = input("\nWhich group do you want to delete?\n>>> ")
-        group = groups.delete(gid)
+        group = groups.remove(gid)
         self.print_not_none(group)
 
     def show_faculties(self, faculties):

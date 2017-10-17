@@ -12,8 +12,8 @@ class Group(object):
 
 
 class Groups(object):
-    def __init__(self):
-        self.groups = list()
+    def __init__(self, groups):
+        self.groups = groups
 
     def add(self, gname, students):
         for i in range(1, self.groups.__len__() + 2):
@@ -30,7 +30,7 @@ class Groups(object):
         return group
 
     def get_group_by_id(self, gid):
-        group = [item for item in self.groups if str(item.id) == str(gid)]
+        group = [item for item in self.groups if str(item.gid) == str(gid)]
         if group :
             return group[0]
         else :
@@ -48,7 +48,8 @@ class Groups(object):
         res = ""
         if self.groups:
             for group in self.groups:
-                res += group.__str__() + "\n"
+                #res.join(group.__str__() + "\n")
+                res += str(group)
         else:
             res = "No groups in database"
         return res
