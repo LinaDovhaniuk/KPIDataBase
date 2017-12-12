@@ -123,13 +123,14 @@ $modalDiv.delegate('.deleteBtn','click', function () {
 $factsTable.delegate('.updateBtnModal','click', function () {
 
     var id = $(this).attr('data-id');
+    console.log(id)
     var $fact =$('#fact'+id).children();
+    console.log($fact)
     var dimensions = [
         $fact[1].textContent,
         $fact[2].textContent,
         $fact[3].textContent
     ];
-
     var projectsN = projects.slice(),
         customersN = customers.slice(),
         teamsN = teams.slice();
@@ -150,7 +151,7 @@ $factsTable.delegate('.updateBtnModal','click', function () {
             teams:teamsN
         }
     };
-
+    console.log(data)
     addModal(cuModalTemlate, data);
 
 });
@@ -240,7 +241,7 @@ $('#searchFinished').on('click', function () {
         url: '/api/search/projects/?finish_status='+value,
         success:function (result) {
             $('#searchFinishTBody').children().remove();
-            $.each(result.directors, function (i, obj) {
+            $.each(result.projects, function (i, obj) {
                 $('#searchFinishTBody').append(Mustache.render(finishedTemplate, obj));
             });
         }
@@ -333,16 +334,16 @@ $('#loadFilesBtn').on('click', function () {
 //region TEMPLATES
 
 var factTemplate =
-    "<tr id='fact{{id}}'>" +
+    "<tr id='fact{{id_changing}}'>" +
     "   <td class='col-md-1'>{{id_changing}}</td>" +
     "   <td>{{project_name}}</td>" +
     "   <td>{{customer_name}}</td>" +
     "   <td>{{team_name}}</td>" +
     "   <td>{{changing_date}}</td>" +
     "   <td class='col-md-3 text-center'>" +
-    "       <button data-id='{{id}}' class='updateBtnModal btn btn-info btn-sm'" +
+    "       <button data-id='{{id_changing}}' class='updateBtnModal btn btn-info btn-sm'" +
     "               data-toggle='modal' data-target='#cuModal'>Edit</button>\n" +
-    "       <button data-id='{{id}}' class='deleteBtnModal btn btn-danger btn-sm'" +
+    "       <button data-id='{{id_changing}}' class='deleteBtnModal btn btn-danger btn-sm'" +
     "               data-toggle='modal' data-target='#deletingModal'>Delete</button>" +
     "   </td>" +
     "</tr>";

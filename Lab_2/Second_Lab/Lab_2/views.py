@@ -102,6 +102,7 @@ def delete_fact(request, id):
      res = dict({
          'status':'OK'
      })
+     return JsonResponse(res)
 
 def get_entities_name(request):
     if request.method == 'GET':
