@@ -58,12 +58,13 @@ class MyDataBase :
         elif table_name is "Teams":
             fields = ['id_team', 'team_name', 'team_department', 'manager_name','developers']
         elif table_name is "Customers":
-            fields = ['id_customer', 'customer_name', 'customer_email', 'customer_phone']
+            fields = ['id_customer', 'customer_name', 'customer_email', 'customer_phone', 'invitings_date']
         else:
             return []
 
         for tuple in tuple_list:
             entities.append(dict(zip(fields, tuple)))
+
         return entities
 
     def get_entities(self, table_name):
@@ -222,24 +223,19 @@ class MyDataBase :
          current.close()
          return self.make_list_of_entities('Projects', data)
 
-    def search_changing_date(self, first, second):
+    def search_invitings_date(self, first, second):
 
         current = self.db_connection.cursor()
-        sql =  "SELECT Changes_project_status.id_changing, Projects.project_name, Customers.customer_name, Teams.team_name, Changes_project_status.changing_date " \
-              "FROM (((Changes_project_status " \
-              "INNER JOIN Projects ON Changes_project_status.id_project = Projects.id_project) " \
-              "INNER JOIN Customers ON Changes_project_status.id_customer = Customers.id_customer) " \
-              "INNER JOIN Teams ON Changes_project_status.id_team = Teams.id_team) " \
-              "WHERE Changes_project_status.changing_date BETWEEN %s AND %s; " % (first, second)
+        sql =  "SELECT * FROM Customers WHERE invitings_date BETWEEN %s AND %s; " % (first, second)
         current.execute(sql)
 
         data = []
         for i in range(current.rowcount):
             data.append(current.fetchone())
-
+        print(data)
         current.close()
 
-        return self.make_list_of_entities('Changes_project_status', data)
+        return self.make_list_of_entities('Customers', data)
 
     def search_project_word_text(self, word):
         print(word)

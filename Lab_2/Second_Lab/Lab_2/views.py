@@ -130,10 +130,11 @@ def date_search(request):
         finish = request.GET.get('finish')
 
         mydb = MyDataBase()
+        customers = mydb.search_invitings_date(start,finish)
         mydb.close_connection()
 
         res = dict({
-
+            'customers': customers
         })
         return JsonResponse(res)
 
@@ -142,7 +143,7 @@ def word_text_search(request):
         searchType = request.GET.get('type')
         search = request.GET.get('search')
         if searchType == 'word':
-            search = '+' + search.replace(' ', '+')
+            search = search.replace(' ', '+')
         else:
             search = ''.join(('"', search, '"'))
 

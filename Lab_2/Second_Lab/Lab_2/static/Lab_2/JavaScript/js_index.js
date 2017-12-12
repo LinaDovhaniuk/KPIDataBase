@@ -260,11 +260,11 @@ $('#searchRange').on('click', function () {
     $('#searchRangeTable').show();
     $.ajax({
         type:'get',
-        url:'/api/search/films/?bottom='+bottom+
+        url:'/api/search/customers/?bottom='+bottom+
             '&top='+top,
         success:function (result) {
             $('#searchRangeTBody').children().remove();
-            $.each(result.films, function (i, obj) {
+            $.each(result.customers, function (i, obj) {
                 $('#searchRangeTBody').append(Mustache.render(rangeTemplate, obj));
             });
         }
@@ -358,10 +358,10 @@ var finishedTemplate =
 
 var rangeTemplate =
     "<tr>" +
-    "   <td class='col-md-1'>{{id}}</td>" +
-    "   <td>{{name}}</td>" +
-    "   <td>{{duration}}</td>" +
-    "   <td>{{budget}}</td>"+
+    "   <td class='col-md-1'>{{id_customer}}</td>" +
+    "   <td>{{customer_name}}</td>" +
+    "   <td>{{customer_email}}</td>" +
+    "   <td>{{invitings_date}}</td>"+
     "</tr>";
 
 var textTemplate =
