@@ -252,7 +252,9 @@ class MyDataBase :
         data = []
         for i in range(current.rowcount):
             data.append(current.fetchone())
-            current.close()
+
+        current.close()
+        print(data)
         return self.make_list_of_entities('Projects', data)
 
     def close_connection(self):
