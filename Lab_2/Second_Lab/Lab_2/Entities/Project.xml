@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Projects>
+    <Project>
+        <project_name>Project 1</project_name>
+        <project_description>Project management is the planning, organizing and managing the effort to accomplish a successful project. A project is a one-time activity that produces a specific output and or outcome, for example, a building or a major new computer system. This is in contrast to a program, (referred to a 'programme' in the UK) which is 1) an ongoing process, such as a quality control program, or 2) an activity to manage a number of multiple projects together.</project_description>
+        <finish_status>1</finish_status>
+    </Project>
+     <Project>
+        <project_name>Project 2</project_name>
+        <project_description>Project management includes developing a project plan, which involves defining and confirming the project goals and objectives, how they will be achieved, identifying tasks and quantifying the resources needed, and determining budgets and timelines for completion.</project_description>
+        <finish_status>0</finish_status>
+    </Project>
+     <Project>
+        <project_name>Project 3</project_name>
+        <project_description>Projects often follow major phases or stages (with various titles for these), for example: feasibility, definition, planning, implementation, evaluation and realisation. (Thanks for Kevin Lonergan for contributing to this description.)</project_description>
+        <finish_status>0</finish_status>
+    </Project>
+</Projects>

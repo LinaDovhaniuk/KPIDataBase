@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Customers>
+    <Customer>
+        <customer_name>Customer 1</customer_name>>
+        <customer_email>Email 1</customer_email>
+        <customer_phone>Phone 1</customer_phone>
+    </Customer>
+    <Customer>
+        <customer_name>Customer 2</customer_name>>
+        <customer_email>Email 2</customer_email>
+        <customer_phone>Phone 2</customer_phone>
+    </Customer>
+</Customers>

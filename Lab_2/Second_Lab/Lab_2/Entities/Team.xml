@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Teams>
+    <Team>
+        <team_name>Team 1</team_name>
+        <team_department>Department 1</team_department>
+        <manager_name>Manager 1</manager_name>
+        <developers>7</developers>
+    </Team>
+    <Team>
+        <team_name>Team 2</team_name>
+        <team_department>Department 2</team_department>
+        <manager_name>Manager 2</manager_name>
+        <developers>3</developers>
+    </Team>
+</Teams>
