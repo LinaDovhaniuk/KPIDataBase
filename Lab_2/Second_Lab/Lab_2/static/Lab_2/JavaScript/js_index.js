@@ -240,6 +240,7 @@ $('#searchFinished').on('click', function () {
         type: 'get',
         url: '/api/search/projects/?finish_status='+value,
         success:function (result) {
+        console.log(result)
             $('#searchFinishTBody').children().remove();
             $.each(result.projects, function (i, obj) {
                 $('#searchFinishTBody').append(Mustache.render(finishedTemplate, obj));
@@ -351,8 +352,8 @@ var factTemplate =
 var finishedTemplate =
     "<tr>" +
     "   <td class='col-md-1'>{{id_project}}</td>" +
-    "   <td>{{name}}</td>" +
-    "   <td class='col-md-6'>{{finish_status}}</td>"+
+    "   <td>{{project_name}}</td>" +
+    "   <td class='col-md-6'>{{project_description}}</td>"+
     "</tr>";
 
 var rangeTemplate =
@@ -365,9 +366,9 @@ var rangeTemplate =
 
 var textTemplate =
     "<tr>" +
-    "   <td class='col-md-1'>{{id}}</td>" +
+    "   <td class='col-md-1'>{{id_project}}</td>" +
     "   <td>{{name}}</td>" +
-    "   <td class='col-md-6'>{{description}}</td>"+
+    "   <td class='col-md-6'>{{project_description}}</td>"+
     "</tr>";
 
 var deletingModalTemplate =

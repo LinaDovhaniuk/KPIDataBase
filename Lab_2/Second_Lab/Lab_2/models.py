@@ -220,8 +220,7 @@ class MyDataBase :
              data.append(current.fetchone())
 
          current.close()
-
-         return self.make_list_of_entities('Changes_project_status', data)
+         return self.make_list_of_entities('Projects', data)
 
     def search_changing_date(self, first, second):
 

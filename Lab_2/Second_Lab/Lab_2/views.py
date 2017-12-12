@@ -121,7 +121,9 @@ def finish_search(request):
         res = dict({
             'projects':projects
         })
+        print(res)
         return JsonResponse(res)
+
 def date_search(request):
     if request.method == 'GET':
         start = request.GET.get('start')
