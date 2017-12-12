@@ -255,7 +255,9 @@ class MyDataBase :
             data.append(current.fetchone())
 
         current.close()
+
         print(data)
+        print(word)
         return self.make_list_of_entities('Projects', data)
 
     def close_connection(self):
