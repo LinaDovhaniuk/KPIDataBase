@@ -58,7 +58,7 @@ $('#newInstanceBtn').on('click', function () {
                 teams : teams
             }
         };
-
+        console.log(data)
         addModal(cuModalTemlate, data);
 });
 
@@ -333,7 +333,7 @@ $('#loadFilesBtn').on('click', function () {
 //region TEMPLATES
 
 var factTemplate =
-    "<tr id='fact{{id}}'>" +
+    "<tr id='fact{{id_changing}}'>" +
     "   <td class='col-md-1'>{{id}}</td>" +
     "   <td>{{project}}</td>" +
     "   <td>{{customer}}</td>" +
