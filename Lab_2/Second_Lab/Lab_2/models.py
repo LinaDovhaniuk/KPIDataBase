@@ -108,7 +108,7 @@ class MyDataBase :
         return self.fact_to_dict(newFact)
 
     def fact_to_dict(self, fact):
-        fields = ['id_changing', 'id_project', 'id_customer', 'id_team', 'changing_date']
+        fields = ['id_changing', 'project_name', 'customer_name', 'team_name', 'changing_date']
 
         factDict = dict(zip(fields, fact))
 

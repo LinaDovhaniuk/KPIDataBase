@@ -184,9 +184,9 @@ $modalDiv.delegate('.updateBtn', 'click', function () {
         dataType:'json',
         success:function (result) {
             var fact = $('#fact'+id).children();
-            fact[1].textContent =result.fact['project'];
-            fact[2].textContent = result.fact['customer'];
-            fact[3].textContent = result.fact['team']
+            fact[1].textContent =result.fact['project_name'];
+            fact[2].textContent = result.fact['customer_name'];
+            fact[3].textContent = result.fact['team_name']
         },
         error: function () {
             alert("Error while updating data!")
@@ -333,12 +333,12 @@ $('#loadFilesBtn').on('click', function () {
 //region TEMPLATES
 
 var factTemplate =
-    "<tr id='fact{{id_changing}}'>" +
-    "   <td class='col-md-1'>{{id}}</td>" +
-    "   <td>{{project}}</td>" +
-    "   <td>{{customer}}</td>" +
-    "   <td>{{team}}</td>" +
-    "   <td>{{finish_date}}</td>" +
+    "<tr id='fact{{id}}'>" +
+    "   <td class='col-md-1'>{{id_changing}}</td>" +
+    "   <td>{{project_name}}</td>" +
+    "   <td>{{customer_name}}</td>" +
+    "   <td>{{team_name}}</td>" +
+    "   <td>{{changing_date}}</td>" +
     "   <td class='col-md-3 text-center'>" +
     "       <button data-id='{{id}}' class='updateBtnModal btn btn-info btn-sm'" +
     "               data-toggle='modal' data-target='#cuModal'>Edit</button>\n" +
