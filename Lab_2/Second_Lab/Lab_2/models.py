@@ -242,6 +242,7 @@ class MyDataBase :
         return self.make_list_of_entities('Changes_project_status', data)
 
     def search_project_word_text(self, word):
+        print(word)
         current = self.db_connection.cursor()
 
         sql = "SELECT * FROM Projects WHERE MATCH (project_description) " \

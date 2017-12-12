@@ -14,6 +14,6 @@ urlpatterns = [
     url(r'^api/search/', include([
         url(r'^projects/$', views.finish_search, name='finish_search'),
         url(r'^projects/$', views.date_search, name='date_search'),
-        url(r'^projects/$', views.word_text_search, name='word_text_search')
+        url(r'^projects_text/$', views.word_text_search, name='word_text_search')
     ]))
 ]

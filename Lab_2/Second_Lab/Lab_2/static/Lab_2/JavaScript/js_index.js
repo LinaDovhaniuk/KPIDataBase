@@ -299,7 +299,7 @@ $('#searchWordText').on('click', function () {
     $('#searchWordTextTable').show();
     $.ajax({
         type:'get',
-        url:'/api/search/projects/?type='+type+
+        url:'/api/search/projects_text/?type='+type+
             '&search='+search,
         success:function (result) {
             $('#searchWordTextTBody').children().remove();
@@ -367,7 +367,7 @@ var rangeTemplate =
 var textTemplate =
     "<tr>" +
     "   <td class='col-md-1'>{{id_project}}</td>" +
-    "   <td>{{name}}</td>" +
+    "   <td>{{project_name}}</td>" +
     "   <td class='col-md-6'>{{project_description}}</td>"+
     "</tr>";
 

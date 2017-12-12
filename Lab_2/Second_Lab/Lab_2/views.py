@@ -141,10 +141,13 @@ def word_text_search(request):
     if request.method == 'GET':
         searchType = request.GET.get('type')
         search = request.GET.get('search')
+        print(search)
         if searchType == 'word':
             search = '+' + search.replace(' ', '+')
         else:
             search = ''.join(('"', search, '"'))
+
+        print(search)
         mydb = MyDataBase()
         projects = mydb.search_project_word_text(search)
         mydb.close_connection()
