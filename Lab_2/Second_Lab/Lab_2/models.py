@@ -138,19 +138,20 @@ class MyDataBase :
 
     def get_all_id_and_name(self, table_name):
         current = self.db_connection.cursor()
-
+        print(table_name)
         if table_name is "Projects" :
-            sql = "SELECT id_project, project_name FROM %s;" % (table_name)
+            print('pr')
+            sql = "SELECT id_project, project_name FROM Projects;"
             current.execute(sql)
         if table_name is "Customers":
-            sql = "SELECT id_customer, customer_name FROM %s;" % (table_name)
+            print('pr')
+            sql = "SELECT id_customer, customer_name FROM Customers;"
             current.execute(sql)
         if table_name is "Teams":
-            sql = "SELECT id_team, team_name FROM %s;" % (table_name)
+            print('pr')
+            sql = "SELECT id_team, team_name FROM Teams;"
             current.execute(sql)
-        else:
-            current.close()
-            return dict()
+
 
         data = []
 
@@ -159,7 +160,7 @@ class MyDataBase :
 
         current.close()
         self.db_connection.commit()
-
+        print(data)
         return self.make_list_of_entities(table_name, data)
 
     def delete_fact(self, id):

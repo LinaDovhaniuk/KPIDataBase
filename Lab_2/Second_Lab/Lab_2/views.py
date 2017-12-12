@@ -29,7 +29,6 @@ def get_entities_names_ids():
         customers = mydb.get_all_id_and_name("Customers")
         teams = mydb.get_all_id_and_name("Teams")
         mydb.close_connection()
-
         return dict({
             'data': {
                 'projects': projects,
@@ -107,6 +106,7 @@ def delete_fact(request, id):
 def get_entities_name(request):
     if request.method == 'GET':
         res = get_entities_names_ids()
+        print(res)
     return JsonResponse(res)
 
 def finish_search(request):
