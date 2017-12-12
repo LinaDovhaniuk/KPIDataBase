@@ -404,7 +404,7 @@ var cuModalTemlate =
     '                           <div class="col-sm-10">\n' +
     '                               <select class="form-control" id="projectSelect">\n' +
     '                                   {{#fact.projects}}' +
-    '                                       <option value="{{ id }}">{{ projects_name }}</option>\n'+
+    '                                       <option value="{{ id_project }}">{{ project_name }}</option>\n'+
     '                                   {{/fact.projects}}' +
     '                               </select>\n' +
     '                           </div>\n' +
@@ -414,7 +414,7 @@ var cuModalTemlate =
     '                           <div class="col-sm-10">\n' +
     '                               <select class="form-control" id="customerSelect">\n' +
     '                                   {{#fact.customers}}' +
-    '                                       <option value="{{ id }}">{{ customer_name }}</option>\n'+
+    '                                       <option value="{{ id_customer }}">{{ customer_name }}</option>\n'+
     '                                   {{/fact.customers}}' +
     '                               </select>\n' +
     '                           </div>\n' +
@@ -424,7 +424,7 @@ var cuModalTemlate =
     '                           <div class="col-sm-10">\n' +
     '                               <select class="form-control" id="teamSelect">\n' +
     '                                   {{#fact.teams}}' +
-    '                                       <option value="{{ id }}">{{ name }}</option>\n'+
+    '                                       <option value="{{ id_team }}">{{ team_name }}</option>\n'+
     '                                   {{/fact.teams}}' +
     '                               </select>\n' +
     '                           </div>\n' +
