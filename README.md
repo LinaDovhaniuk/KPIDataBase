@@ -1,5 +1,5 @@
 
-# Лабораторна робота №1
+# Лабораторна робота №2
 ![image](https://user-images.githubusercontent.com/14149724/33915501-579164f6-dfac-11e7-860e-6838f4b7aa2b.png)
 
 ### Варіант
