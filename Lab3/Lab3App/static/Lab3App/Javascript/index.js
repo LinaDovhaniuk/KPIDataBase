@@ -1,4 +1,4 @@
-var studios, films, directors;
+var projects, teams, customers;
 
 var $factsTable = $('#factsTable');
 function addFact(fact) {
@@ -34,20 +34,12 @@ $(function () {
             });
 
             $.get('/api/dimensions_names/', function (data) {
-                films = data.data.films;
-                studios = data.data.studios;
-                directors = data.data.directors;
+                projects = data.data.projects;
+                customers = data.data.customers;
+                teams = data.data.teams;
             });
         }
     });
-});
-
-$(document).ajaxStart(function() {
-    $("#loading").show();
-});
-
-$(document).ajaxStop(function () {
-    $('#loading').hide();
 });
 
 //region POSTING
@@ -61,9 +53,9 @@ $('#newInstanceBtn').on('click', function () {
                 classType: "createBtn"
             },
             fact: {
-                films: films,
-                directors: directors,
-                studios: studios
+                projects: projects,
+                customers: customers,
+                teams: teams
             }
         };
 
@@ -72,11 +64,13 @@ $('#newInstanceBtn').on('click', function () {
 
 $modalDiv.delegate('.createBtn', 'click', function () {
 
-    var data = {
-        filmId:$('#filmSelect').val(),
-        directorId:$('#directorSelect').val(),
-        studioId:$('#studioSelect').val()
+     var data = {
+        id_project:$('#projectSelect').val(),
+        id_customer:$('#customerSelect').val(),
+        id_team:$('#teamSelect').val()
     };
+
+    console.log(data)
 
     $.ajax({
         type:'post',
@@ -138,12 +132,12 @@ $factsTable.delegate('.updateBtnModal','click', function () {
         $fact[3].textContent
     ];
 
-    var filmsN = films.slice(),
-        dirN = directors.slice(),
-        studN = studios.slice();
-    filmsN = changedArray(filmsN, dimensions[0]);
-    dirN = changedArray(dirN, dimensions[1]);
-    studN = changedArray(studN, dimensions[2]);
+     var projectsN = projects.slice(),
+        customersN = customers.slice(),
+        teamsN = teams.slice();
+    projectsN = changedArray(projectsN, dimensions[0]);
+    customersN = changedArray(customersN, dimensions[1]);
+    teamsN = changedArray(teamsN, dimensions[2]);
 
     var data = {
         modal: {
@@ -153,12 +147,12 @@ $factsTable.delegate('.updateBtnModal','click', function () {
             classType: "updateBtn"
         },
         fact:{
-            films:filmsN,
-            directors:dirN,
-            studios:studN
+            projects:projectsN,
+            customers:customersN,
+            teams:teamsN
         }
     };
-
+    console.log(data)
     addModal(cuModalTemlate, data);
 
 });
@@ -173,14 +167,14 @@ function changedArray( array, name) {
 $modalDiv.delegate('.updateBtn', 'click', function () {
 
     var selected = [
-        film=$('#filmSelect'),
-        dir=$('#directorSelect'),
-        stud=$('#studioSelect')
+        project=$('#projectSelect'),
+        customer=$('#customerSelect'),
+        team=$('#teamSelect')
     ];
     var data = {
-        filmId:selected[0].val(),
-        directorId:selected[1].val(),
-        studioId:selected[2].val()
+        id_project:selected[0].val(),
+        id_customer:selected[1].val(),
+        id_team:selected[2].val()
     },
         id = $(this).attr('data-id');
 
@@ -192,9 +186,9 @@ $modalDiv.delegate('.updateBtn', 'click', function () {
         dataType:'json',
         success:function (result) {
             var fact = $('#fact'+id).children();
-            fact[1].textContent =result.fact['film__name'];
-            fact[2].textContent = result.fact['director__name'];
-            fact[3].textContent = result.fact['studio__name']
+            fact[1].textContent =result.fact['id_project__project_name'];
+            fact[2].textContent = result.fact['id_customer__customer_name'];
+            fact[3].textContent = result.fact['id_team__team_name']
         },
         error: function () {
             alert("Error while updating data!")
@@ -218,6 +212,7 @@ $('#truncateBtnModal').on('click', function () {
 
 $modalDiv.delegate('.truncateBtn', 'click', function () {
     $('#loadFilesBtn').prop('disabled', false);
+
     $.ajax({
         type:'delete',
         url:'/api/facts/',
@@ -239,17 +234,18 @@ $modalDiv.delegate('.truncateBtn', 'click', function () {
 
 //region BOOL
 
-$('#searchOscar').on('click', function () {
+$('#searchFinished').on('click', function () {
 
-    var value = $('#oscar').val();
-    $('#searchOscarTable').show();
+    var value = $('#finished').val();
+    $('#searchFinishedTable').show();
     $.ajax({
         type: 'get',
-        url: '/api/search/directors/?oscar='+value,
+        url: '/api/search/projects/?finish_status='+value,
         success:function (result) {
-            $('#searchOscarTBody').children().remove();
-            $.each(result.directors, function (i, obj) {
-                $('#searchOscarTBody').append(Mustache.render(oscarTemplate, obj));
+        console.log(result)
+            $('#searchFinishTBody').children().remove();
+            $.each(result.projects, function (i, obj) {
+                $('#searchFinishTBody').append(Mustache.render(finishedTemplate, obj));
             });
         }
     });
@@ -257,20 +253,22 @@ $('#searchOscar').on('click', function () {
 
 //endregion
 
-//region NUMBER RANGE
+//region Date RANGE
 
 $('#searchRange').on('click', function () {
 
     var bottom = $('#bottomVal').val(),
         top = $('#topVal').val();
+    console.log(bottom)
+    console.log(top)
     $('#searchRangeTable').show();
     $.ajax({
         type:'get',
-        url:'/api/search/films/?bottom='+bottom+
+        url:'/api/search/customers/?bottom='+bottom+
             '&top='+top,
         success:function (result) {
             $('#searchRangeTBody').children().remove();
-            $.each(result.films, function (i, obj) {
+            $.each(result.customers, function (i, obj) {
                 $('#searchRangeTBody').append(Mustache.render(rangeTemplate, obj));
             });
         }
@@ -284,34 +282,33 @@ $('#searchRange').on('click', function () {
 //region TEMPLATES
 
 var factTemplate =
-    "<tr id='fact{{id}}'>" +
-    "   <td class='col-md-1'>{{id}}</td>" +
-    "   <td>{{film__name}}</td>" +
-    "   <td>{{director__name}}</td>" +
-    "   <td>{{studio__name}}</td>" +
-    "   <td>{{date}}</td>" +
+    "<tr id='fact{{id_changing}}'>" +
+    "   <td class='col-md-1'>{{id_changing}}</td>" +
+    "   <td>{{id_project__project_name}}</td>" +
+    "   <td>{{id_customer__customer_name}}</td>" +
+    "   <td>{{id_team__team_name}}</td>" +
+    "   <td>{{changing_date}}</td>" +
     "   <td class='col-md-3 text-center'>" +
-    "       <button data-id='{{id}}' class='updateBtnModal btn btn-info btn-sm'" +
+    "       <button data-id='{{id_changing}}' class='updateBtnModal btn btn-info btn-sm'" +
     "               data-toggle='modal' data-target='#cuModal'>Edit</button>\n" +
-    "       <button data-id='{{id}}' class='deleteBtnModal btn btn-danger btn-sm'" +
+    "       <button data-id='{{id_changing}}' class='deleteBtnModal btn btn-danger btn-sm'" +
     "               data-toggle='modal' data-target='#deletingModal'>Delete</button>" +
     "   </td>" +
     "</tr>";
 
-var oscarTemplate =
+var finishedTemplate =
     "<tr>" +
-    "   <td class='col-md-1'>{{id}}</td>" +
-    "   <td>{{name}}</td>" +
-    "   <td>{{country}}</td>" +
-    "   <td class='col-md-6'>{{bio}}</td>"+
+    "   <td class='col-md-1'>{{id_project}}</td>" +
+    "   <td>{{project_name}}</td>" +
+    "   <td class='col-md-6'>{{project_description}}</td>"+
     "</tr>";
 
 var rangeTemplate =
     "<tr>" +
-    "   <td class='col-md-1'>{{id}}</td>" +
-    "   <td>{{name}}</td>" +
-    "   <td>{{duration}}</td>" +
-    "   <td>{{budget}}</td>"+
+    "   <td class='col-md-1'>{{id_customer}}</td>" +
+    "   <td>{{customer_name}}</td>" +
+    "   <td>{{customer_email}}</td>" +
+    "   <td>{{invitings_date}}</td>"+
     "</tr>";
 
 var deletingModalTemplate =
@@ -345,32 +342,32 @@ var cuModalTemlate =
     '           <div class="modal-body">\n' +
     '               <form class="form-horizontal">\n' +
     '                   <div class="form-group">\n' +
-    '                       <label class="control-label col-sm-2" for="filmSelect">Film:</label>\n' +
+    '                       <label class="control-label col-sm-2" for="projectSelect">Project:</label>\n' +
     '                           <div class="col-sm-10">\n' +
-    '                               <select class="form-control" id="filmSelect">\n' +
-    '                                   {{#fact.films}}' +
-    '                                       <option value="{{ id }}">{{ name }}</option>\n'+
-    '                                   {{/fact.films}}' +
+    '                               <select class="form-control" id="projectSelect">\n' +
+    '                                   {{#fact.projects}}' +
+    '                                       <option value="{{ id_project }}">{{project_name }}</option>\n'+
+    '                                   {{/fact.projects}}' +
     '                               </select>\n' +
     '                           </div>\n' +
     '                   </div>\n' +
     '                   <div class="form-group">\n' +
-    '                       <label class="control-label col-sm-2" for="directorSelect">Director:</label>\n' +
+    '                       <label class="control-label col-sm-2" for="customerSelect">Customer:</label>\n' +
     '                           <div class="col-sm-10">\n' +
-    '                               <select class="form-control" id="directorSelect">\n' +
-    '                                   {{#fact.directors}}' +
-    '                                       <option value="{{ id }}">{{ name }}</option>\n'+
-    '                                   {{/fact.directors}}' +
+    '                               <select class="form-control" id="customerSelect">\n' +
+    '                                   {{#fact.customers}}' +
+    '                                       <option value="{{ id_customer }}">{{customer_name }}</option>\n'+
+    '                                   {{/fact.customers}}' +
     '                               </select>\n' +
     '                           </div>\n' +
     '                   </div>\n' +
     '                   <div class="form-group">\n' +
-    '                       <label class="control-label col-sm-2" for="studioSelect">Studio:</label>\n' +
+    '                       <label class="control-label col-sm-2" for="teamSelect">Team:</label>\n' +
     '                           <div class="col-sm-10">\n' +
-    '                               <select class="form-control" id="studioSelect">\n' +
-    '                                   {{#fact.studios}}' +
-    '                                       <option value="{{ id }}">{{ name }}</option>\n'+
-    '                                   {{/fact.studios}}' +
+    '                               <select class="form-control" id="teamSelect">\n' +
+    '                                   {{#fact.teams}}' +
+    '                                       <option value="{{ id_team }}">{{team_name }}</option>\n'+
+    '                                   {{/fact.teams}}' +
     '                               </select>\n' +
     '                           </div>\n' +
     '                   </div>\n' +
