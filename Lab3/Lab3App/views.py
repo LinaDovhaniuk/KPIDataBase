@@ -127,7 +127,7 @@ def get_all_id_name_dim(dim_name):
 
 def get_facts(id=None):
     if id is None:
-        return ChangesProjectStatus.objects.values('id_changing', 'project__name', 'team__name', 'customer__name', 'changing_date').order_by('id_changing')
+        return ChangesProjectStatus.objects.values('id_changing', 'id_project__project_name', 'id_team__team_name', 'id_customer__customer_name', 'changing_date').order_by('id_changing')
 
     else:
-        return ChangesProjectStatus.objects.filter(id_changing=int(id)).values('id_changing', 'project__name', 'team__name', 'customer__name', 'changing_date')
+        return ChangesProjectStatus.objects.filter(id_changing=int(id)).values('id_changing', 'id_project__project_name', 'id_team__team_name', 'id_customer__customer_name', 'changing_date')

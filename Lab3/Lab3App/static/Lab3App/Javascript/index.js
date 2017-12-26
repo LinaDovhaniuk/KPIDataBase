@@ -185,9 +185,9 @@ $modalDiv.delegate('.updateBtn', 'click', function () {
         dataType:'json',
         success:function (result) {
             var fact = $('#fact'+id).children();
-            fact[1].textContent =result.fact['project_name'];
-            fact[2].textContent = result.fact['customer_name'];
-            fact[3].textContent = result.fact['team_name']
+            fact[1].textContent =result.fact['id_project__project_name'];
+            fact[2].textContent = result.fact['id_customer__customer_name'];
+            fact[3].textContent = result.fact['id_team__team_name']
         },
         error: function () {
             alert("Error while updating data!")
@@ -280,9 +280,9 @@ $('#searchRange').on('click', function () {
 var factTemplate =
     "<tr id='fact{{id_changing}}'>" +
     "   <td class='col-md-1'>{{id_changing}}</td>" +
-    "   <td>{{project_name}}</td>" +
-    "   <td>{{customer_name}}</td>" +
-    "   <td>{{team_name}}</td>" +
+    "   <td>{{id_project__project_name}}</td>" +
+    "   <td>{{id_customer__customer_name}}</td>" +
+    "   <td>{{id_team__team_name}}</td>" +
     "   <td>{{changing_date}}</td>" +
     "   <td class='col-md-3 text-center'>" +
     "       <button data-id='{{id_changing}}' class='updateBtnModal btn btn-info btn-sm'" +
@@ -295,16 +295,16 @@ var factTemplate =
 var finishedTemplate =
     "<tr>" +
     "   <td class='col-md-1'>{{id_project}}</td>" +
-    "   <td>{{project_name}}</td>" +
-    "   <td class='col-md-6'>{{project_description}}</td>"+
+    "   <td>{{id_project__project_name}}</td>" +
+    "   <td class='col-md-6'>{{id_project__project_description}}</td>"+
     "</tr>";
 
 var rangeTemplate =
     "<tr>" +
     "   <td class='col-md-1'>{{id_customer}}</td>" +
-    "   <td>{{customer_name}}</td>" +
-    "   <td>{{customer_email}}</td>" +
-    "   <td>{{invitings_date}}</td>"+
+    "   <td>{{id_customer__customer_name}}</td>" +
+    "   <td>{{id_customer__customer_email}}</td>" +
+    "   <td>{{id_customer__invitings_date}}</td>"+
     "</tr>";
 
 var deletingModalTemplate =
@@ -342,7 +342,7 @@ var cuModalTemlate =
     '                           <div class="col-sm-10">\n' +
     '                               <select class="form-control" id="projectSelect">\n' +
     '                                   {{#fact.projects}}' +
-    '                                       <option value="{{ id_project }}">{{ project_name }}</option>\n'+
+    '                                       <option value="{{ id_project }}">{{ id_project__project_name }}</option>\n'+
     '                                   {{/fact.projects}}' +
     '                               </select>\n' +
     '                           </div>\n' +
@@ -352,7 +352,7 @@ var cuModalTemlate =
     '                           <div class="col-sm-10">\n' +
     '                               <select class="form-control" id="customerSelect">\n' +
     '                                   {{#fact.customers}}' +
-    '                                       <option value="{{ id_customer }}">{{ customer_name }}</option>\n'+
+    '                                       <option value="{{ id_customer }}">{{ id_customer__customer_name }}</option>\n'+
     '                                   {{/fact.customers}}' +
     '                               </select>\n' +
     '                           </div>\n' +
@@ -362,7 +362,7 @@ var cuModalTemlate =
     '                           <div class="col-sm-10">\n' +
     '                               <select class="form-control" id="teamSelect">\n' +
     '                                   {{#fact.teams}}' +
-    '                                       <option value="{{ id_team }}">{{ team_name }}</option>\n'+
+    '                                       <option value="{{ id_team }}">{{ id_team__team_name }}</option>\n'+
     '                                   {{/fact.teams}}' +
     '                               </select>\n' +
     '                           </div>\n' +
