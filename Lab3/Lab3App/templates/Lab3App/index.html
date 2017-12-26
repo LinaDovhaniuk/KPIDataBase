@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Films</title>
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.min.js"></script>
+    </head>
+
+    <body background="/static/Lab3App/background.jpg">
+
+         <div class="container">
+
+             <div class="jumbotron">
+
+                 <h1 class="text-center">Film creation</h1>
+             </div>
+             <ul class="pager">
+                 <li class="next"><a href="{% url 'Lab3App:history' %}">History</a></li>
+             </ul>
+             <table  class="table table-bordered table-hover well"
+                     style="border-radius: 15px; border-width: 0px">
+                 <thead>
+                 <tr>
+                     <th class="col-md-1">#</th>
+                     <th >Film</th>
+                     <th >Director</th>
+                     <th >Studio</th>
+                     <th >Date</th>
+                     <th class="col-md-3">Action</th>
+                 </tr>
+                 </thead>
+                 <tbody id="factsTable"></tbody>
+             </table>
+
+             <div class="row">
+                 <div class="col-md-6 text-center">
+                     <button id="newInstanceBtn" type="button" class="btn btn-primary btn-lg"
+                             data-toggle="modal" data-target="#cuModal">
+                         Add instance
+                     </button>
+                 </div>
+                 <div class="col-md-6 text-center">
+                     <button id="truncateBtnModal" type="button" class="btn btn-danger btn-lg"
+                             data-toggle="modal" data-target="#deletingModal">
+                         Delete table
+                     </button>
+                 </div>
+             </div>
+             <div id="loading" class="row" style="display: none">
+                 <div class="col-md-12 text-center">
+                     <img src="/static/Lab3App/loading.gif" alt="loading" width="150">
+                 </div>
+             </div>
+             <hr>
+             <div class="panel panel-group panel-primary">
+                <div class="panel-heading text-center">Search</div>
+                <div class="panel-body">
+                    <div class="panel-group" id="accordion">
+                        <div class="panel panel-default"><!--BOOL SEARCH-->
+                            <div class="panel-heading">
+                                <h3 class="panel-title">
+                                    <a href="#collapseBoolSearch" data-parent="#accordion" data-toggle="collapse">
+                                        Bool search
+                                    </a>
+                                </h3>
+                            </div>
+                            <div id="collapseBoolSearch" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    Find directors which
+                                    <select id="oscar">
+                                        <option value="1">have</option>
+                                        <option value="0">don't have</option>
+                                    </select> oscar. <br/><br/>
+                                    <button id="searchOscar" class="btn btn-default" type="submit">
+                                        Search
+                                        <i class="glyphicon glyphicon-search"></i>
+                                    </button>
+                                    <hr>
+                                    <table  id="searchOscarTable" class="table table-bordered table-hover well" style="display: none">
+                                        <thead>
+                                        <tr>
+                                            <th class="col-md-1">#</th>
+                                            <th >Name</th>
+                                            <th >Country</th>
+                                            <th class="col-md-6">Biography</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="searchOscarTBody"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div><!--BOOL SEARCH-->
+                        <div class="panel panel-default"><!--Number ranges search-->
+                            <div class="panel-heading">
+                                <h3 class="panel-title">
+                                    <a href="#collapseNumRangeSearch" data-parent="#accordion" data-toggle="collapse">
+                                        Number range search
+                                    </a>
+                                </h3>
+                            </div>
+                            <div id="collapseNumRangeSearch" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    Find films with budget between
+                                    <input type="number" id="bottomVal">
+                                    and
+                                    <input type="number" id="topVal">
+                                    <br/>
+                                    <button id="searchRange" class="btn btn-default" type="submit">
+                                        Search
+                                        <i class="glyphicon glyphicon-search"></i>
+                                    </button>
+                                    <hr>
+                                    <table  id="searchRangeTable" class="table table-bordered table-hover well" style="display: none">
+                                        <thead>
+                                        <tr>
+                                            <th class="col-md-1">#</th>
+                                            <th >Name</th>
+                                            <th >Duration</th>
+                                            <th >Budget</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="searchRangeTBody"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div><!--NUMBER RANGE SEARCH-->
+                    </div>
+                </div>
+            </div>
+         </div>
+
+         <div id="modalTarget"></div>
+
+    </body>
+        <script src="/static/Lab3App/Javascript/index.js"></script>
+
+</html>
