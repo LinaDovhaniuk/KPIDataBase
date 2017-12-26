@@ -77,9 +77,11 @@ WSGI_APPLICATION = 'Lab3.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'OPTIONS':{
-            'read_default_file': os.path.join(BASE_DIR, 'config.cnf')
-        }
+        'NAME': 'lab_2_db',
+        'USER': 'root',
+        'PASSWORD': '1111',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
 
