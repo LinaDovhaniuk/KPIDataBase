@@ -12,14 +12,12 @@ class IndexView(generic.ListView):
     def get_queryset(self):
         pass
 
-
 class HistoryView(generic.ListView):
     template_name = 'Lab3App/history.html'
     context_object_name = 'history_list'
 
     def get_queryset(self):
         return History.objects.order_by('-date')
-
 
 def all_facts(request):
 
@@ -41,8 +39,8 @@ def get_all_facts(request):
 def post_fact(request):
     dataStr = request.body.decode('utf-8')
     fact = ast.literal_eval(dataStr)
-    newFact = ChangesProjectStatus.objects.create(id_changing = fact['id_changing'], id_project = fact['id_project'],
-                            id_customer = fact['id_customer'], id_team = fact['id_team'], changing_date = str(datetime.date.today()))
+    newFact = FilmCreations.objects.create(film_id = fact['filmId'], director_id = fact['directorId'],
+                            studio_id = fact['studioId'], date = str(datetime.date.today()))
 
     newFact = get_facts(newFact.id)
 
@@ -52,7 +50,7 @@ def post_fact(request):
     return JsonResponse(res)
 
 def delete_facts(request):
-    ChangesProjectStatus.objects.all().delete()
+    FilmCreations.objects.all().delete()
     res = dict({'status':True})
     return JsonResponse(res)
 
@@ -66,15 +64,15 @@ def put_fact(request, id):
     dataStr = request.body.decode('utf-8')
     fact = ast.literal_eval(dataStr)
 
-    ChangesProjectStatus.objects.filter(id_changing=int(id)).update(id_project = fact['id_project'],
-                            id_customer = fact['id_customer'], id_team = fact['id_team'])
+    FilmCreations.objects.filter(id=int(id)).update(film_id = fact['filmId'],
+                                director_id = fact['directorId'], studio_id = fact['studioId'])
 
     newFact = get_facts(id)
     res = dict({'fact': list(newFact)[0]})
     return JsonResponse(res)
 
 def delete_fact(request, id):
-    ChangesProjectStatus.objects.filter(id=int(id)).delete()
+    FilmCreations.objects.filter(id=int(id)).delete()
     res = dict({'status':'OK'})
     return JsonResponse(res)
 
@@ -82,11 +80,11 @@ def delete_fact(request, id):
 
 def bool_search(request):
     if request.method == 'GET':
-        finish_status = request.GET.get('finish_status')
+        oscar = request.GET.get('oscar')
 
-        projects = Projects.objects.filter(finish_status=finish_status).values()
+        directors = Directors.objects.filter(oscar=oscar).values()
 
-        res = dict({'projects':list(projects)})
+        res = dict({'directors':list(directors)})
         return JsonResponse(res)
 
 def range_search(request):
@@ -94,22 +92,22 @@ def range_search(request):
         bottom = request.GET.get('bottom')
         top = request.GET.get('top')
 
-        customers = Customers.objects.filter(date__range=[bottom,top]).values()
+        films = Films.objects.filter(budget__range=[bottom,top]).values()
 
-        res = dict({'customers':list(customers)})
+        res = dict({'films':list(films)})
         return JsonResponse(res)
 
 def get_dim_names_ids(request):
 
-    projects = get_all_id_name_dim("Projects")
-    customers = get_all_id_name_dim("Customers")
-    teams = get_all_id_name_dim("Teams")
+    directors = get_all_id_name_dim("Directors")
+    films = get_all_id_name_dim("Films")
+    studios = get_all_id_name_dim("Studios")
 
     res = dict({
         'data': {
-            'projects': projects,
-            'customers': customers,
-            'teams': teams
+            'directors': directors,
+            'films': films,
+            'studios': studios
         }
     })
 
@@ -117,17 +115,11 @@ def get_dim_names_ids(request):
 
 def get_all_id_name_dim(dim_name):
     Dimension = apps.get_model('Lab3App', dim_name)
-    if(dim_name == 'Projects'):
-        return list(Dimension.objects.values('id_project', 'project_name'))
-    if(dim_name == 'Customers'):
-        return list(Dimension.objects.values('id_customer', 'customer_name'))
-    if(dim_name == 'Teams'):
-        return list(Dimension.objects.values('id_team', 'team_name'))
-
+    return list(Dimension.objects.values('id','name'))
 
 def get_facts(id=None):
     if id is None:
-        return ChangesProjectStatus.objects.values('id_changing', 'id_project__project_name', 'id_team__team_name', 'id_customer__customer_name', 'changing_date').order_by('id_changing')
-
+        return FilmCreations.objects\
+            .values('id', 'film__name', 'director__name', 'studio__name', 'date').order_by('id')
     else:
-        return ChangesProjectStatus.objects.filter(id_changing=int(id)).values('id_changing', 'id_project__project_name', 'id_team__team_name', 'id_customer__customer_name', 'changing_date')
+        return FilmCreations.objects.filter(id=int(id)).values('id', 'film__name','director__name', 'studio__name', 'date')

@@ -1,70 +1,41 @@
-# This is an auto-generated Django model module.
-# You'll have to do the following manually to clean this up:
-#   * Rearrange models' order
-#   * Make sure each model has one field with primary_key=True
-#   * Make sure each ForeignKey has `on_delete` set to the desired behavior.
-#   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
-# Feel free to rename the models, but don't rename db_table values or field names.
 from __future__ import unicode_literals
 
 from django.db import models
 
 
-class ChangesProjectStatus(models.Model):
-    id_changing = models.AutoField(primary_key=True)
-    id_project = models.ForeignKey('Projects', models.DO_NOTHING, db_column='id_project', blank=True, null=True)
-    id_customer = models.ForeignKey('Customers', models.DO_NOTHING, db_column='id_customer', blank=True, null=True)
-    id_team = models.ForeignKey('Teams', models.DO_NOTHING, db_column='id_team', blank=True, null=True)
-    changing_date = models.DateField(blank=True, null=True)
+class Directors(models.Model):
+    id = models.AutoField(db_column='Id', primary_key=True)
+    name = models.CharField(db_column='Name', max_length=45, blank=True, null=True)
+    country = models.CharField(db_column='Country', max_length=45, blank=True, null=True)
+    oscar = models.IntegerField(db_column='Oscar', blank=True, null=True)
+    bio = models.TextField(db_column='Bio', blank=True, null=True)
 
     class Meta:
         managed = False
-        db_table = 'changes_project_status'
+        db_table = 'Directors'
 
 
-class Customers(models.Model):
-    id_customer = models.IntegerField(primary_key=True)
-    customer_name = models.CharField(max_length=256, blank=True, null=True)
-    customer_email = models.CharField(max_length=256, blank=True, null=True)
-    customer_phone = models.CharField(max_length=256, blank=True, null=True)
-    invitings_date = models.DateField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'customers'
-
-
-class DjangoMigrations(models.Model):
-    app = models.CharField(max_length=255)
-    name = models.CharField(max_length=255)
-    applied = models.DateTimeField()
+class FilmCreations(models.Model):
+    id = models.AutoField(db_column='Id', primary_key=True)
+    film = models.ForeignKey('Films', models.DO_NOTHING, db_column='Film_id', blank=True, null=True)
+    director = models.ForeignKey(Directors, models.DO_NOTHING, db_column='Director_id', blank=True, null=True)
+    studio = models.ForeignKey('Studios', models.DO_NOTHING, db_column='Studio_id', blank=True, null=True)
+    date = models.DateField(db_column='Date', blank=True, null=True)
 
     class Meta:
         managed = False
-        db_table = 'django_migrations'
+        db_table = 'Film_creations'
 
 
-class Projects(models.Model):
-    id_project = models.AutoField(primary_key=True)
-    project_name = models.CharField(max_length=256, blank=True, null=True)
-    project_description = models.TextField(blank=True, null=True)
-    finish_status = models.IntegerField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'projects'
-
-
-class Teams(models.Model):
-    id_team = models.AutoField(primary_key=True)
-    team_name = models.CharField(max_length=256, blank=True, null=True)
-    team_department = models.CharField(max_length=256, blank=True, null=True)
-    manager_name = models.CharField(max_length=256, blank=True, null=True)
-    developers = models.IntegerField(blank=True, null=True)
+class Films(models.Model):
+    id = models.AutoField(db_column='Id', primary_key=True)
+    name = models.CharField(db_column='Name', max_length=45, blank=True, null=True)
+    duration = models.IntegerField(db_column='Duration', blank=True, null=True)
+    budget = models.IntegerField(db_column='Budget', blank=True, null=True)
 
     class Meta:
         managed = False
-        db_table = 'teams'
+        db_table = 'Films'
 
 
 class History(models.Model):
@@ -78,4 +49,16 @@ class History(models.Model):
     class Meta:
         managed = False
         db_table = 'History'
+
+
+class Studios(models.Model):
+    id = models.AutoField(db_column='Id', primary_key=True)
+    name = models.CharField(db_column='Name', max_length=45, blank=True, null=True)
+    year = models.IntegerField(db_column='Year', blank=True, null=True)
+    country = models.CharField(db_column='Country', max_length=45, blank=True, null=True)
+    history = models.TextField(db_column='History', blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'Studios'
 
