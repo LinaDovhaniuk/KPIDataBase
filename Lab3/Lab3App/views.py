@@ -41,13 +41,21 @@ def get_all_facts(request):
 def post_fact(request):
     dataStr = request.body.decode('utf-8')
     fact = ast.literal_eval(dataStr)
-    newFact = ChangesProjectStatus.objects.create(id_project = fact['id_project'],
-                            id_customer = fact['id_customer'], id_team = fact['id_team'], changing_date = str(datetime.date.today()))
+    instance = ChangesProjectStatus(
+        id_project=Projects.objects.get(id_project=fact['id_project']),
+        id_customer = Customers.objects.get(id_customer=fact['id_customer']),
+        id_team = Teams.objects.get(id_team=fact['id_team']),
+        changing_date=str(datetime.date.today())
+    )
+    ''''newFact = ChangesProjectStatus.objects.create(Projects.objects.filter(id_project = fact['id_project']),
+                            Customers.objects.filter(id_customer = fact['id_customer']), Teams.objects.filter(id_team = fact['id_team']), changing_date = str(datetime.date.today()))
 
-    newFact = get_facts(newFact.id)
+    newFact = get_facts(newFact.id_changing)
     print(newFact)
+    '''''
+    instance.save()
     res = dict({
-        'fact': list(newFact)[0]
+        'fact': list(ChangesProjectStatus.objects.filter(id_changing=instance.id_changing).values('id_changing', 'id_project__project_name', 'id_team__team_name', 'id_customer__customer_name', 'changing_date').order_by('id_changing'))[0]
     })
     return JsonResponse(res)
 
@@ -65,9 +73,14 @@ def fact(request, id):
 def put_fact(request, id):
     dataStr = request.body.decode('utf-8')
     fact = ast.literal_eval(dataStr)
-
-    ChangesProjectStatus.objects.filter(id_changing=int(id)).update(id_project = fact['id_project'],
-                            id_customer = fact['id_customer'], id_team = fact['id_team'])
+    ChangesProjectStatus.objects\
+        .filter(id_changing=int(id))\
+        .update(
+        id_project=Projects.objects.get(id_project=fact['id_project']),
+        id_customer=Customers.objects.get(id_customer=fact['id_customer']),
+        id_team=Teams.objects.get(id_team=fact['id_team']),
+        changing_date=datetime.date.today()
+    )
 
     newFact = get_facts(id)
     print(newFact)
@@ -75,7 +88,7 @@ def put_fact(request, id):
     return JsonResponse(res)
 
 def delete_fact(request, id):
-    ChangesProjectStatus.objects.filter(id=int(id)).delete()
+    ChangesProjectStatus.objects.filter(id_changing=int(id)).delete()
     res = dict({'status':'OK'})
     return JsonResponse(res)
 

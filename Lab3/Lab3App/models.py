@@ -18,7 +18,6 @@ class ChangesProjectStatus(models.Model):
     changing_date = models.DateField(blank=True, null=True)
 
     class Meta:
-        managed = False
         db_table = 'changes_project_status'
 
 
@@ -30,18 +29,16 @@ class Customers(models.Model):
     invitings_date = models.DateField(blank=True, null=True)
 
     class Meta:
-        managed = False
         db_table = 'customers'
 
 
-class DjangoMigrations(models.Model):
-    app = models.CharField(max_length=255)
-    name = models.CharField(max_length=255)
-    applied = models.DateTimeField()
-
-    class Meta:
-        managed = False
-        db_table = 'django_migrations'
+# class DjangoMigrations(models.Model):
+#     app = models.CharField(max_length=255)
+#     name = models.CharField(max_length=255)
+#     applied = models.DateTimeField()
+#
+#     class Meta:
+#         db_table = 'django_migrations'
 
 
 class Projects(models.Model):
@@ -51,7 +48,6 @@ class Projects(models.Model):
     finish_status = models.IntegerField(blank=True, null=True)
 
     class Meta:
-        managed = False
         db_table = 'projects'
 
 
@@ -63,19 +59,17 @@ class Teams(models.Model):
     developers = models.IntegerField(blank=True, null=True)
 
     class Meta:
-        managed = False
         db_table = 'teams'
 
 
 class History(models.Model):
     id = models.AutoField(db_column='Id', primary_key=True)
-    filmCreations_id = models.IntegerField(db_column='FilmCreations_Id')
-    filmHistory = models.CharField(db_column='FilmHistory', max_length=80, blank=True, null=True)
-    directorHistory = models.CharField(db_column='DirectorHistory', max_length=80, blank=True, null=True)
-    studioHistory = models.CharField(db_column='StudioHistory', max_length=80, blank=True, null=True)
+    changes_project_status_id = models.IntegerField(db_column='Changes_project_status_id')
+    projectHistory = models.CharField(db_column='ProjectHistory', max_length=80, blank=True, null=True)
+    customerHistory = models.CharField(db_column='CustomerHistory', max_length=80, blank=True, null=True)
+    teamHistory = models.CharField(db_column='TeamHistory', max_length=80, blank=True, null=True)
     date = models.DateTimeField(db_column='Date')
 
     class Meta:
-        managed = False
         db_table = 'History'
 

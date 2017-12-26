@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'Lab3.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'lab_2_db',
+        'NAME': 'lab_3_db',
         'USER': 'root',
         'PASSWORD': '1111',
         'HOST': 'localhost',

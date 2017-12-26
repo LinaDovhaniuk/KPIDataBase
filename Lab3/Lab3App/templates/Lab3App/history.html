@@ -22,21 +22,21 @@
                 <thead>
                 <tr>
                     <th class="col-md-1">#</th>
-                    <th class="col-md-1">FC</th>
-                    <th>Film</th>
-                    <th>Director</th>
-                    <th>Studio</th>
-                    <th>Date&Time</th>
+                    <th class="col-md-1">PC</th>
+                    <th>Project</th>
+                    <th>Customer</th>
+                    <th>Team</th>
+                    <th>Datetime</th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for history in history_list %}
                     <tr>
                         <td>{{ history.id }}</td>
-                        <td>{{ history.filmCreations_id }}</td>
-                        <td>{{ history.filmHistory }}</td>
-                        <td>{{ history.directorHistory }}</td>
-                        <td>{{ history.studioHistory }}</td>
+                        <td>{{ history.changes_project_status_id }}</td>
+                        <td>{{ history.projectHistory }}</td>
+                        <td>{{ history.customerHistory }}</td>
+                        <td>{{ history.teamHistory }}</td>
                         <td>{{ history.date }}</td>
                     </tr>
                 {% endfor %}
