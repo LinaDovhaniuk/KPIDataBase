@@ -1,22 +1,17 @@
 import scrapy
-# from news.news.items import NewsItem
+from news.items import NewsItem
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
 
 
-class NewsItem(scrapy.Item):
-    page_url = scrapy.Field()
-    page_texts = scrapy.Field()
-    page_images = scrapy.Field()
-
 class News_Spider(scrapy.Spider):
    name = "newsSpider"
 
-   custom_settings = {
-       'ITEM_PIPELINES': {
-           'news.pipelines.NewsPipeline': 800
-       }
-   }
+   # custom_settings = {
+   #     'ITEM_PIPELINES': {
+   #         'news.pipelines.NewsPipeline': 800
+   #     }
+   # }
 
    start_urls = {
       'https://tsn.ua/'

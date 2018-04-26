@@ -15,3 +15,10 @@ class NewsItem(scrapy.Item):
     page_texts = scrapy.Field()
     page_images = scrapy.Field()
 
+
+class ProductItem(scrapy.Item):
+    title = scrapy.Field()
+    price = scrapy.Field()
+    description = scrapy.Field()
+    image = scrapy.Field()
+
